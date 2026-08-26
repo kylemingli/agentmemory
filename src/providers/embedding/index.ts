@@ -7,6 +7,7 @@ import { CohereEmbeddingProvider } from "./cohere.js";
 import { OpenRouterEmbeddingProvider } from "./openrouter.js";
 import { LocalEmbeddingProvider } from "./local.js";
 import { ClipEmbeddingProvider } from "./clip.js";
+import { MNNEmbeddingProvider } from "./mnn.js";
 
 export {
   GeminiEmbeddingProvider,
@@ -16,6 +17,7 @@ export {
   OpenRouterEmbeddingProvider,
   LocalEmbeddingProvider,
   ClipEmbeddingProvider,
+  MNNEmbeddingProvider,
 };
 
 let imageEmbeddingProvider: EmbeddingProvider | null = null;
@@ -44,6 +46,8 @@ export function createEmbeddingProvider(): EmbeddingProvider | null {
       return withDimensionGuard(new OpenRouterEmbeddingProvider(getEnvVar("OPENROUTER_API_KEY")!));
     case "local":
       return withDimensionGuard(new LocalEmbeddingProvider());
+    case "mnn":
+      return withDimensionGuard(new MNNEmbeddingProvider());
     default:
       return null;
   }
