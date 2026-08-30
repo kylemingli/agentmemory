@@ -121,3 +121,22 @@ MNN 生态的 embedding 模型仅 5 个:
 | `mnn_embedding.node` | 新增二进制 |
 | `agentmemory_ctl.py` | 新增(运维脚本) |
 | `deploy-termux-aarch64.sh` | 新增(部署脚本) |
+
+## MCP 端点
+
+LineCodePro 等纯 HTTP MCP 客户端连接地址:
+
+```
+http://127.0.0.1:3111/agentmemory/jsonrpc
+```
+
+请求格式(简化 JSON-RPC,非标准 MCP initialize 握手):
+
+- 列工具:`{"method":"tools/list"}`
+- 调工具:`{"method":"tools/call","params":{"name":"memory_recall","arguments":{"query":"..."}}}`
+
+注意:
+
+- 根路径 `http://127.0.0.1:3111` 和 `/agentmemory/health` 不是 MCP 端点,POST 会 405
+- `/agentmemory/mcp/tools` 仅 GET,POST 会 405
+- 标准 MCP `initialize` 握手不受支持,调用方必须直接发 `tools/list` / `tools/call`
