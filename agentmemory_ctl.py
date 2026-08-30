@@ -42,6 +42,7 @@ ENGINE_REAL_BIN = HOME / ".agentmemory" / "bin" / "iii.real"
 LOG_FILE = Path("/storage/emulated/0/agentmemory-start.log")
 DEBUG_DIR = "/storage/emulated/0/agentmemory-debug"
 LIVEZ_URL = "http://127.0.0.1:3111/agentmemory/livez"
+MCP_ENDPOINT = "http://127.0.0.1:3111/agentmemory/jsonrpc"
 
 START_ENV = {
     "AGENTMEMORY_DEBUG_JSONRPC": "1",
@@ -141,6 +142,7 @@ def start() -> bool:
 
     if is_livez_ok():
         print("服务已在运行(livez 200),无需重复启动。")
+        print(f"MCP 端点: {MCP_ENDPOINT}")
         return True
 
     env = os.environ.copy()
@@ -173,6 +175,7 @@ def start() -> bool:
         if is_livez_ok():
             engine_pids = find_engine_pids()
             print("服务已启动,livez 200。")
+            print(f"MCP 端点: {MCP_ENDPOINT}")
             if engine_pids:
                 print(f"引擎 PID: {', '.join(map(str, engine_pids))}")
             else:
@@ -303,6 +306,7 @@ def status() -> None:
         print("  (配置文件不存在)")
 
     print("\n-- 服务 --")
+    print(f"  MCP 端点 : {MCP_ENDPOINT}")
     if is_livez_ok():
         print("  livez: 200 (运行中)")
         try:
